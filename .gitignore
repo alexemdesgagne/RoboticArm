@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+.vs/
+*.log
+*.pdb
+*.props
+*.tlog
+*.lastbuildstate
+*.ilk
+RoboticArm/x64/Debug/moc/moc_RoboticArm.cpp
+RoboticArm/x64/Debug/rcc/qrc_RoboticArm.cpp
+RoboticArm/x64/Debug/uic/ui_RoboticArm.h
