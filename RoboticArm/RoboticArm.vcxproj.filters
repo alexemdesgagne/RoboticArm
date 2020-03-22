@@ -31,9 +31,21 @@
     <ClCompile Include="RoboticArm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QControlPanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QConnectionPanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="RoboticArm.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QControlPanel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QConnectionPanel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

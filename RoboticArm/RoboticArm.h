@@ -3,6 +3,10 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_RoboticArm.h"
 
+#include <QGroupBox>
+#include <QVBoxLayout>
+#include <QWidget>
+
 class RoboticArm : public QMainWindow
 {
 	Q_OBJECT
