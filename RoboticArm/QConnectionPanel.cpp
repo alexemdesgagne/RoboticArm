@@ -33,5 +33,18 @@ void QConnectionPanel::connection()
 
 void QConnectionPanel::setParameters() 
 {
+	// Setup ports name.
+	for (QSerialPortInfo & port : QConnector::getPorts()) {
+		mPortSelector->addItem(port.portName());
+	}
 
+	// Setup baud rates.
+	mBaudRateSelector->addItem("1200");
+	mBaudRateSelector->addItem("2400");
+	mBaudRateSelector->addItem("4800");
+	mBaudRateSelector->addItem("9600");
+	mBaudRateSelector->addItem("19200");
+	mBaudRateSelector->addItem("38400");
+	mBaudRateSelector->addItem("57600");
+	mBaudRateSelector->addItem("115200");
 }
