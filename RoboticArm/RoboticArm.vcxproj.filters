@@ -37,6 +37,9 @@
     <ClCompile Include="QConnectionPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QConnector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="RoboticArm.h">
@@ -46,6 +49,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="QConnectionPanel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QConnector.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

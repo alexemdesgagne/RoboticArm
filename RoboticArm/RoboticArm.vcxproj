@@ -43,11 +43,11 @@
   </ImportGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <QtInstall>msvc2017_64</QtInstall>
-    <QtModules>charts;core;datavisualization;gui;widgets</QtModules>
+    <QtModules>charts;core;datavisualization;gui;serialport</QtModules>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QtInstall>msvc2017_64</QtInstall>
-    <QtModules>charts;core;datavisualization;gui;widgets</QtModules>
+    <QtModules>charts;core;datavisualization;gui;serialport</QtModules>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
     <Import Project="$(QtMsBuild)\qt.props" />
@@ -82,6 +82,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="QConnectionPanel.cpp" />
+    <ClCompile Include="QConnector.cpp" />
     <ClCompile Include="QControlPanel.cpp" />
     <ClCompile Include="RoboticArm.cpp" />
   </ItemGroup>
@@ -99,6 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="QConnectionPanel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="QConnector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
