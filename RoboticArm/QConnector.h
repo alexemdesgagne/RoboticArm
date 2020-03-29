@@ -13,10 +13,10 @@ public:
 	QConnector(QObject *parent);
 	~QConnector();
 
-	static void connection();
-	static void disconnect();
-	static QList<QSerialPortInfo> getPorts();
+	void connection(QString portName, int baudRate);
+	void disconnect();
+	QList<QSerialPortInfo> getPorts();
 
 private:
-	QSerialPort * serial;
+	QSerialPort * mSerial;
 };

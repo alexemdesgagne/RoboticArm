@@ -5,6 +5,11 @@
 #include <QString>
 #include <QFormLayout>
 #include <QComboBox>
+#include <QColor>
+#include <QLabel>
+#include <QSize>
+#include <QPixmap>
+#include "QConnector.h"
 
 class QPushButton;
 
@@ -16,14 +21,29 @@ public:
 	QConnectionPanel(QWidget *parent);
 	~QConnectionPanel();
 
+	enum class State { connected = 0, disconnected = 1 };
+	State state() const { return mState; }
+
 private:
+	State mState;
 	QPushButton * mConnectButton;
+	QPushButton * mDisconnectButton;
 	QComboBox * mPortSelector;
 	QComboBox * mBaudRateSelector;
-
+	QConnector * mConnector;
+	QLabel * mStateViewer;
+	QPixmap mStatePixMap;
+	
 	void connection();
+	void disconnection();
+	void updateControls();
 	void setParameters();
 
 	static const QString sBoxTitle;
 	static const QString sConnectButtonTitle;
+	static const QString sDisconnectButtonTitle;
+	static const QColor sConnectedColor;
+	static const QColor sDisconnectedColor;
+	static const int sStateViewerHeight;
+	static const int sStateViewerWidth;
 };
