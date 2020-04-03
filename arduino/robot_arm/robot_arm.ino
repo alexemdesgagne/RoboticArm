@@ -4,14 +4,26 @@
  * Author:     Alexandre Desgagné
  */
 
+#include <Servo.h> 
+
 enum State {control = 1, record = 2};
 
 // Variables
-int mControlLedPin = 2;
-int mRecordLedPin = 3;
-int mWorkingLedPin = 4;
 String input;
 State mState;
+
+// LEDs
+int mControlLedPin = 2;
+int mRecordLedPin = 7;
+int mWorkingLedPin = 4;
+
+// Servos
+Servo mGripper;
+Servo mWristPitch;
+Servo mWristRoll;
+Servo mElbow;
+Servo mShoulder;
+Servo mWaist;
 
 // Function to set control state LED.
 void setControlStateLed(){
@@ -31,8 +43,32 @@ void setRecordStateLed(){
  * pos: Servo position.
  */
 void moveServo(int index, int pos){
-  String toPrint = "Servo: " + String(index) + ", Pos: " + String(pos);
-  Serial.println(toPrint);
+  if (mState == State::control){
+     String toPrint = "Servo: " + String(index) + ", Pos: " + String(pos);
+     Serial.println(toPrint);
+     switch(index){
+      case 1:
+        mGripper.write(pos);
+        break;
+      case 2:
+        mWristPitch.write(pos);
+        break;
+      case 3:
+        mWristRoll.write(pos);
+        break;
+      case 4:
+        mElbow.write(pos);
+        break;
+      case 5:
+        mShoulder.write(pos);
+        break;
+      case 6:
+        mWaist.write(pos);
+        break;
+      default:
+        break;
+    } 
+  }
 }
 
 // Function to flash working lED for fun.
@@ -54,6 +90,12 @@ void setup(){
   pinMode(mWorkingLedPin, OUTPUT);
 
   // Servos
+  mGripper.attach(3);
+  mWristPitch.attach(5);
+  mWristRoll.attach(6);
+  mElbow.attach(9);
+  mShoulder.attach(10);
+  mWaist.attach(11);
   
   // Serial setup.
   Serial.begin(9600);
@@ -72,8 +114,6 @@ void loop(){
     char carac = Serial.read();
     if (carac == ';'){
       if (input.length() > 1) {
-        Serial.println(input);
-        
         int value = input.toInt(); // Parse value from input.
 
         // Select the servo and send the pos from the input code.

@@ -69,6 +69,7 @@ void QControlPanel::control() {
 	mState = State::control;
 	updateControls();
 	mConnector->setControlMode();
+	//mConnector->setServosPositions(5, 10, 15, 20, 25, 30);
 }
 
 void QControlPanel::record() {

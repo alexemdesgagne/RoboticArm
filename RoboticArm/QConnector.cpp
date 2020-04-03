@@ -1,6 +1,6 @@
 #include "QConnector.h"
 #include <QtDebug>
-#include <QByteArray>
+
 
 
 QConnector::QConnector(QObject *parent)
@@ -25,28 +25,38 @@ void QConnector::disconnect() {
 	mSerial->close();
 }
 
+void QConnector::setServosPositions(int posA, int posB, int posC, int posD, int posE, int posF) 
+{
+	QString packet = QString( QString::number(posA) + "a;" +
+	                          QString::number(posB) + "b;" +
+							  QString::number(posC) + "c;" +
+	                          QString::number(posD) + "d;" +
+							  QString::number(posE) + "e;" +
+							  QString::number(posF) + "f;");
+	QByteArray command = QByteArray(packet.toUtf8());
+	send(command);
+}
+
 void QConnector::setControlMode()
 {
-	if (mSerial->isOpen()) {
-		QByteArray buffer = QByteArray("1m;");
-		mSerial->write(buffer);
-		mSerial->waitForBytesWritten(-1);
-	}
+	QByteArray command = QByteArray("1m;");
+	send(command);
 }
 
 void QConnector::setRecordMode()
 {
-	if (mSerial->isOpen()) {
-		QByteArray buffer = QByteArray("2m;");
-		mSerial->write(buffer);
-		mSerial->waitForBytesWritten(-1);
-	}
+	QByteArray command = QByteArray("2m;");
+	send(command);
 }
 
 void QConnector::sayHello()
 {
+	QByteArray command = QByteArray("4p;");
+	send(command);
+}
+
+void QConnector::send(QByteArray & buffer) {
 	if (mSerial->isOpen()) {
-		QByteArray buffer = QByteArray("4p;");
 		mSerial->write(buffer);
 		mSerial->waitForBytesWritten(-1);
 	}
