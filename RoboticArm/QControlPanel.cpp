@@ -6,10 +6,10 @@
 #include <QFormLayout>
 
 const QString QControlPanel::sBoxTitle{  QString("Control") };
-const QString QControlPanel::mControlButtonTitle{ QString("Control") };
-const QString QControlPanel::mRecordButtonTitle{ QString("Record movements") };
+const QString QControlPanel::mControlButtonTitle{ QString("Control mode") };
+const QString QControlPanel::mRecordButtonTitle{ QString("Record mode") };
 
-QControlPanel::QControlPanel(QWidget *parent)
+QControlPanel::QControlPanel(QWidget *parent, QConnector *connector)
 	: QGroupBox(parent),
 	mState{ State::control },
 	mWaistSlider{ new QSlider },
@@ -19,7 +19,8 @@ QControlPanel::QControlPanel(QWidget *parent)
 	mWristPitchSlider{ new QSlider },
 	mGripperSlider{ new QSlider },
 	mControlButton{ new QPushButton(mControlButtonTitle) },
-	mRecordButton{ new QPushButton(mRecordButtonTitle) }
+	mRecordButton{ new QPushButton(mRecordButtonTitle) },
+	mConnector{ connector }
 {
 	setTitle(sBoxTitle);
 	QFormLayout * inputLayout{ new QFormLayout };
@@ -67,11 +68,13 @@ QHBoxLayout * QControlPanel::sliderLayout(QSlider * & slider, int min, int max)
 void QControlPanel::control() {
 	mState = State::control;
 	updateControls();
+	mConnector->setControlMode();
 }
 
 void QControlPanel::record() {
 	mState = State::record;
 	updateControls();
+	mConnector->setRecordMode();
 }
 
 void QControlPanel::updateControls() 

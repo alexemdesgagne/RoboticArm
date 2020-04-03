@@ -15,6 +15,9 @@ public:
 
 	void connection(QString portName, int baudRate);
 	void disconnect();
+	void setControlMode();
+	void setRecordMode();
+	void sayHello();
 	QList<QSerialPortInfo> getPorts();
 
 private:

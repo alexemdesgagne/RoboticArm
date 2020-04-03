@@ -3,18 +3,20 @@
 const QString QConnectionPanel::sBoxTitle{ QString("Connection") };
 const QString QConnectionPanel::sConnectButtonTitle{ QString("Connect") };
 const QString QConnectionPanel::sDisconnectButtonTitle{ QString("Disconnect") };
+const QString QConnectionPanel::sFunnyButtonTitle{ QString("Ping") };
 const QColor QConnectionPanel::sConnectedColor{ QColor(0, 161, 54) };
 const QColor QConnectionPanel::sDisconnectedColor{ QColor(161, 38, 0) };
 const int QConnectionPanel::sStateViewerHeight{ 15 };
 const int QConnectionPanel::sStateViewerWidth{ 250 };
 
-QConnectionPanel::QConnectionPanel(QWidget *parent)
+QConnectionPanel::QConnectionPanel(QWidget *parent, QConnector *connector)
 	: QGroupBox(parent),
 	mConnectButton{ new QPushButton(sConnectButtonTitle) },
 	mDisconnectButton{ new QPushButton(sDisconnectButtonTitle) },
+	mFunnyButton{ new QPushButton(sFunnyButtonTitle) },
 	mPortSelector{ new QComboBox },
 	mBaudRateSelector{ new QComboBox },
-	mConnector{new QConnector(this) },
+	mConnector{ connector },
 	mState{ State::disconnected },
 	mStateViewer{ new QLabel },
 	mStatePixMap{ QPixmap(QSize(sStateViewerWidth, sStateViewerHeight)) }
@@ -26,6 +28,7 @@ QConnectionPanel::QConnectionPanel(QWidget *parent)
 	inputLayout->addRow("Baud rate", mBaudRateSelector);
 	inputLayout->addRow(mConnectButton);
 	inputLayout->addRow(mDisconnectButton);
+	inputLayout->addRow(mFunnyButton);
 	inputLayout->addRow(mStateViewer);
 	setLayout(inputLayout);
 
@@ -34,6 +37,7 @@ QConnectionPanel::QConnectionPanel(QWidget *parent)
 
 	connect(mConnectButton, &QPushButton::pressed, this, &QConnectionPanel::connection);
 	connect(mDisconnectButton, &QPushButton::pressed, this, &QConnectionPanel::disconnection);
+	connect(mFunnyButton, &QPushButton::pressed, this, &QConnectionPanel::sayHello);
 }
 
 QConnectionPanel::~QConnectionPanel()
@@ -46,6 +50,12 @@ void QConnectionPanel::connection()
 		mConnector->connection(mPortSelector->currentText(), mBaudRateSelector->currentText().toInt());
 		mState = State::connected;
 	}
+	updateControls();
+}
+
+void QConnectionPanel::sayHello()
+{
+	mConnector->sayHello();
 	updateControls();
 }
 
@@ -62,6 +72,7 @@ void QConnectionPanel::updateControls()
 {
 	mConnectButton->setEnabled(mState != State::connected);
 	mDisconnectButton->setEnabled(mState != State::disconnected);
+	mFunnyButton->setEnabled(mState == State::connected);
 
 	if (mState == State::connected) {
 		mStatePixMap.fill(sConnectedColor);

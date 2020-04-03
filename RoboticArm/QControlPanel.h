@@ -5,6 +5,8 @@
 #include <QString>
 #include <QPushButton>
 
+#include "QConnector.h"
+
 class QSlider;
 class QPushButton;
 
@@ -13,7 +15,7 @@ class QControlPanel : public QGroupBox
 	Q_OBJECT
 
 public:
-	QControlPanel(QWidget *parent);
+	QControlPanel(QWidget *parent, QConnector *connector);
 	~QControlPanel();
 
 	enum class State { control = 0, record = 1 };
@@ -31,6 +33,8 @@ private:
 
 	QPushButton * mControlButton;
 	QPushButton * mRecordButton;
+
+	QConnector * mConnector;
 
 	QHBoxLayout * sliderLayout(QSlider * & sb, int min, int max);
 	void control();
