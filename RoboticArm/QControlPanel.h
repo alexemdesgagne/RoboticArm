@@ -3,12 +3,13 @@
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QString>
+#include <QSpinBox>
 #include <QPushButton>
 
 #include "QConnector.h"
 
-class QSlider;
 class QPushButton;
+class QSpinBox;
 
 class QControlPanel : public QGroupBox
 {
@@ -24,24 +25,27 @@ public:
 private:
 	State mState;
 
-	QSlider * mWaistSlider;
-	QSlider * mShoulderSlider;
-	QSlider * mElbowSlider;
-	QSlider * mWristRollSlider;
-	QSlider * mWristPitchSlider;
-	QSlider * mGripperSlider;
+	QSpinBox * mWaistInput;
+	QSpinBox * mShoulderInput;
+	QSpinBox * mElbowInput;
+	QSpinBox * mWristRollInput;
+	QSpinBox * mWristPitchInput;
+	QSpinBox * mGripperInput;
 
+	QPushButton * mSetPositionsButton;
 	QPushButton * mControlButton;
 	QPushButton * mRecordButton;
 
 	QConnector * mConnector;
 
-	QHBoxLayout * sliderLayout(QSlider * & sb, int min, int max);
+	QHBoxLayout * servoInputLayout(QSpinBox * & sb, int min, int max);
 	void control();
 	void record();
 	void updateControls();
+	void updateServosPositions();
 
 	static const QString sBoxTitle;
-	static const QString mControlButtonTitle;
-	static const QString mRecordButtonTitle;
+	static const QString sSetPositionsButtonTitle;
+	static const QString sControlButtonTitle;
+	static const QString sRecordButtonTitle;
 };

@@ -11,6 +11,8 @@ enum State {control = 1, record = 2};
 // Variables
 String input;
 State mState;
+int servo1Pos, servo2Pos, servo3Pos, servo4Pos, servo5Pos, servo6Pos; // current position
+int servo1PPos, servo2PPos, servo3PPos, servo4PPos, servo5PPos, servo6PPos; // previous 
 
 // LEDs
 int mControlLedPin = 2;
@@ -48,22 +50,100 @@ void moveServo(int index, int pos){
      Serial.println(toPrint);
      switch(index){
       case 1:
-        mGripper.write(pos);
+        servo1Pos = pos;
+        if (servo1PPos > servo1Pos) {
+          for ( int j = servo1PPos; j >= servo1Pos; j--) {
+            mGripper.write(j);
+            delay(30);
+          }
+        }
+        if (servo1PPos < servo1Pos) {
+          for ( int j = servo1PPos; j <= servo1Pos; j++) {
+            mGripper.write(j);
+            delay(30);
+          }
+        }
+        servo1PPos = servo1Pos;
         break;
       case 2:
-        mWristPitch.write(pos);
+        servo2Pos = pos;
+        if (servo2PPos > servo2Pos) {
+          for ( int j = servo2PPos; j >= servo2Pos; j--) {
+            mWristPitch.write(j);
+            delay(30);
+          }
+        }
+        if (servo2PPos < servo2Pos) {
+          for ( int j = servo2PPos; j <= servo2Pos; j++) {
+            mWristPitch.write(j);
+            delay(30);
+          }
+        }
+        servo2PPos = servo2Pos;
         break;
       case 3:
-        mWristRoll.write(pos);
+        servo3Pos = pos;
+        if (servo3PPos > servo3Pos) {
+          for ( int j = servo3PPos; j >= servo3Pos; j--) {
+            mWristRoll.write(j);
+            delay(30);
+          }
+        }
+        if (servo3PPos < servo3Pos) {
+          for ( int j = servo3PPos; j <= servo3Pos; j++) {
+            mWristRoll.write(j);
+            delay(30);
+          }
+        }
+        servo3PPos = servo3Pos;
         break;
       case 4:
-        mElbow.write(pos);
+        servo4Pos = pos;
+        if (servo4PPos > servo4Pos) {
+          for ( int j = servo4PPos; j >= servo4Pos; j--) {
+            mElbow.write(j);
+            delay(30);
+          }
+        }
+        if (servo4PPos < servo4Pos) {
+          for ( int j = servo4PPos; j <= servo4Pos; j++) {
+            mElbow.write(j);
+            delay(30);
+          }
+        }
+        servo4PPos = servo4Pos;
         break;
       case 5:
-        mShoulder.write(pos);
+        servo5Pos = pos;
+        if (servo5PPos > servo5Pos) {
+          for ( int j = servo5PPos; j >= servo5Pos; j--) {
+            mShoulder.write(j);
+            delay(30);
+          }
+        }
+        if (servo5PPos < servo5Pos) {
+          for ( int j = servo5PPos; j <= servo5Pos; j++) {
+            mShoulder.write(j);
+            delay(30);
+          }
+        }
+        servo5PPos = servo5Pos;
         break;
       case 6:
-        mWaist.write(pos);
+        servo6Pos = pos;
+        if (servo6PPos > servo6Pos) {
+          for ( int j = servo6PPos; j >= servo6Pos; j--) {
+            mWaist.write(j);
+            delay(30);
+          }
+        }
+        if (servo6PPos < servo6Pos) {
+          for ( int j = servo6PPos; j <= servo6Pos; j++) {
+            mWaist.write(j);
+            delay(30);
+          }
+        }
+        servo6PPos = servo6Pos;
         break;
       default:
         break;
@@ -99,10 +179,13 @@ void setup(){
   
   // Serial setup.
   Serial.begin(9600);
-
+  delay(20);
   // Initial state.
   mState = State::control;
   setControlStateLed();
+
+  servo1PPos = 120;
+  mGripper.write(servo1PPos);
 
   // Working LED started.
   digitalWrite(mWorkingLedPin, HIGH);
